@@ -1,0 +1,70 @@
+package Script;
+
+import Utils.Reuse;
+import Page.MobilePage;
+import io.cucumber.java.en.*;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class MobileSteps {
+
+    WebDriver driver;
+    Reuse reuse;
+    MobilePage mobilePage;
+
+    @Given("User launch the official amazon page")
+    public void user_launch_the_official_amazon_page() {
+        driver = new ChromeDriver();
+        reuse = new Reuse(driver);
+        reuse.openApp("https://www.amazon.in/");
+    }
+
+    @When("User clicks on the Mobile button and Mobile page is opened")
+    public void user_clicks_on_the_mobile_button_and_mobile_page_is_opened() {
+        mobilePage = new MobilePage(driver);
+        mobilePage.clickMobile();
+        reuse.waitFor10Seconds();
+        reuse.getPageTitle("Mobiles Store");
+    }
+
+    @When("User clicks on the Mobile button")
+    public void user_clicks_on_the_mobile_button() {
+        mobilePage = new MobilePage(driver);
+        mobilePage.clickMobile();
+        reuse.waitFor10Seconds();
+    }
+
+    @Then("User clicks on the back button")
+    public void user_clicks_on_the_back_button() {
+        reuse.backToPreviousPage();
+        reuse.waitFor10Seconds();
+    }
+
+    @Then("User should be on the amazon home page")
+    public void user_should_be_on_the_amazon_home_page() {
+        reuse.getPageTitle("Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in");
+    }
+
+    @When("User clicks on the Mobile button again")
+    public void user_clicks_on_the_mobile_button_again() {
+        mobilePage = new MobilePage(driver);
+        mobilePage.clickMobile();
+        reuse.waitFor10Seconds();
+    }
+
+    @Then("User refresh the page")
+    public void user_refresh_the_page() {
+        reuse.refreshPage();
+        reuse.waitFor10Seconds();
+    }
+
+    @Then("Mobile page remains loaded")
+    public void mobile_page_remains_loaded() {
+        reuse.getCurrentUrl("mobiles");
+    }
+
+    @Then("Close the browser")
+    public void close_the_browser() {
+        reuse.closeApp();
+    }
+}
